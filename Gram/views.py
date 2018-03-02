@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from .models import Image
+from .models import Image, Profile
 # Create your views here.
 
 
@@ -18,7 +18,9 @@ def home(request):
 # @login_required(login_url='/accounts/login/')
 def profile(request):
     test = 'Profile route Working'
+    profiles = Profile.objects.all()
     content = {
         "test": test,
+        "profiles": profiles
     }
     return render(request, 'profiles/profile.html', content)
