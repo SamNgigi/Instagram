@@ -1,0 +1,35 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% if title %}
+    <title>Moringa Tribune -{{title}}</title>
+    {% else %}
+    <title>Moringa Tribune</title>
+    {% endif %}
+<!-- css -->
+    {% block styles %}
+      {% bootstrap_css %}
+      <link rel="stylesheet" href="{% static 'Css/main.css' %}">
+    {% endblock %}
+<!--scripts  -->
+    {% block scripts %}
+    <!-- jquery -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <!-- pooper -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
+      {% bootstrap_javascript %}
+      <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+      {% bootstrap_javascript %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block content %}
+    <div class="container">
+      <h1 class="text-center">The date today is {{date|date:"l d-F Y"}}</h1>
+    </div>
+    {% endblock %}
+  </body>
+</html>
