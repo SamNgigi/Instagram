@@ -5,12 +5,6 @@
     <div class="col-6">
       <h1>{{test}}</h1>
       <a class="btn btn-default" href="/logout"><h2>Logout</h2></a>
-      <a class="btn btn-default" href="{% url 'profile' %}"><h2>Profile</h2></a>
-    </div>
-    <div class="col-6">
-      {% for photo in image_test %}
-        <img src="{{photo.image.url}}" alt="" class="img-fluid">
-      {% endfor %}
     </div>
   </div>
 </div>
