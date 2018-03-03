@@ -34,8 +34,8 @@ class Image(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, blank=True)
 
-    def save_images(self):
-        self.save()
-
     class Meta:
         ordering = ['-time']
+
+    def save_images(self):
+        self.save()

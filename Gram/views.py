@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import Image, Profile
+from .forms import ProfileForm  # , PostForm
 # Create your views here.
 
 
@@ -15,7 +16,7 @@ def home(request):
     return render(request, 'index.html', content)
 
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def profile(request):
     test = 'Profile route Working'
     profiles = Profile.objects.all()
@@ -24,3 +25,23 @@ def profile(request):
         "profiles": profiles
     }
     return render(request, 'profiles/profile.html', content)
+
+
+@login_required(login_url='/accounts/login/')
+def profile_edit(request):
+    test = 'Edit profile route working'
+    current_user = request.user
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = current_user
+            profile.save()
+    else:
+        form = ProfileForm(instance=request.user)
+
+        content = {
+            "test": test,
+            "form": form,
+        }
+        return render(request, 'profiles/edit-profile.html', content)
