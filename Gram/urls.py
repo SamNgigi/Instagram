@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^profile/', views.profile, name='profile'),
     url(r'^edit/', views.profile_edit, name='edit'),
+    url(r'^post/', views.post, name='post'),
+    url(r'^comment/', views.comment, name='comment'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

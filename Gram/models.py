@@ -2,6 +2,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.db import models
 # import datetime as dt
+from tinymce.models import HTMLField
 # Create your models here.
 
 
@@ -28,8 +29,8 @@ class Profile(models.Model):
 
 class Image(models.Model):
     image = models.ImageField(upload_to='images/', blank=True, null=True)
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True)
-    caption = models.CharField(max_length=255, blank=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+    caption = HTMLField(blank=True)
     likes = models.PositiveIntegerField(blank=True, default=0)
     time = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, blank=True)
@@ -39,3 +40,13 @@ class Image(models.Model):
 
     def save_images(self):
         self.save()
+
+
+class Comment(models.Model):
+    comment = models.CharField(max_length=200)
+    user = models.ForeignKey(User,  on_delete=models.CASCADE, blank=True)
+    profile_pic = models.ForeignKey(Profile, blank=True)
+    time_posted = models.DateTimeField(auto_now_add=True, blank=True)
+
+    class Meta:
+        ordering = ['-time_posted']

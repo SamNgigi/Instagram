@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Image
+from .models import Profile, Image, Comment
 
 
 class ProfileForm(forms.ModelForm):
@@ -13,4 +13,10 @@ class ProfileForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude = ['user', 'likes', 'time']
+        exclude = ['creator', 'likes', 'time', 'tags']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment', ]
