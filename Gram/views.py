@@ -9,9 +9,20 @@ from .forms import ProfileForm, PostForm, CommentForm
 def home(request):
     test = 'Working'
     image_test = Image.objects.all()
+    current_user = request.user
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.creator = current_user
+            post.save()
+    else:
+        form = CommentForm()
+
     content = {
         "test": test,
-        "image_test": image_test
+        "image_test": image_test,
+        "comment_form": form
     }
     return render(request, 'index.html', content)
 
