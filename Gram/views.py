@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from .models import Image, Profile
+from .models import Image, Profile, Comment
 from .forms import ProfileForm, PostForm, CommentForm
 # Create your views here.
 
@@ -9,19 +9,21 @@ from .forms import ProfileForm, PostForm, CommentForm
 def home(request):
     test = 'Working'
     image_test = Image.objects.all()
+    comment_test = Comment.objects.all()
     current_user = request.user
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = CommentForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.creator = current_user
-            post.save()
+            comment = form.save(commit=False)
+            comment.user = current_user
+            comment.save()
     else:
         form = CommentForm()
 
     content = {
         "test": test,
         "image_test": image_test,
+        "comment_test": comment_test,
         "comment_form": form
     }
     return render(request, 'index.html', content)
