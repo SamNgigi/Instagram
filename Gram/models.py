@@ -12,6 +12,9 @@ class Tag(models.Model):
     class Meta:
         ordering = ['-name']
 
+    def save_tag(self):
+        self.save()
+
 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
@@ -26,6 +29,12 @@ class Profile(models.Model):
 
     post_save.connect(create_profile, sender=User)
 
+    def __str__(self):
+        return self.user.username
+
+    def save_profile(self):
+        self.save()
+
 
 class Comment(models.Model):
     comment = models.CharField(max_length=200, blank=True)
@@ -35,6 +44,9 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-time_posted']
+
+    def save_comment(self):
+        self.save()
 
 
 class Image(models.Model):
