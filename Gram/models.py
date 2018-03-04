@@ -27,10 +27,22 @@ class Profile(models.Model):
     post_save.connect(create_profile, sender=User)
 
 
+class Comment(models.Model):
+    comment = models.CharField(max_length=200, blank=True)
+    user = models.ForeignKey(User,  on_delete=models.CASCADE, blank=True)
+    # profile_pic = models.ForeignKey(Profile, blank=True)
+    time_posted = models.DateTimeField(auto_now_add=True, blank=True)
+
+    class Meta:
+        ordering = ['-time_posted']
+
+
 class Image(models.Model):
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
     caption = models.TextField(blank=True)
+    comment = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, null=True)
     likes = models.PositiveIntegerField(blank=True, default=0)
     time = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, blank=True)
@@ -40,13 +52,3 @@ class Image(models.Model):
 
     def save_images(self):
         self.save()
-
-
-class Comment(models.Model):
-    comment = models.CharField(max_length=200)
-    user = models.ForeignKey(User,  on_delete=models.CASCADE, blank=True)
-    # profile_pic = models.ForeignKey(Profile, blank=True)
-    time_posted = models.DateTimeField(auto_now_add=True, blank=True)
-
-    class Meta:
-        ordering = ['-time_posted']
