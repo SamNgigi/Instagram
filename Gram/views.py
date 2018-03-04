@@ -30,6 +30,17 @@ def home(request):
 
 
 @login_required(login_url='/accounts/login/')
+def all(request):
+    test = 'Working'
+    all_pics = Image.objects.all()
+    content = {
+        'test': test,
+        'all_pics': all_pics,
+    }
+    return render(request, 'all.html', content)
+
+
+@login_required(login_url='/accounts/login/')
 def post(request):
     test = 'Working'
     current_user = request.user

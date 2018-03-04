@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^edit/', views.profile_edit, name='edit'),
     url(r'^post/', views.post, name='post'),
     url(r'^comment/', views.comment, name='comment'),
+    url(r'^all/', views.all, name='all'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

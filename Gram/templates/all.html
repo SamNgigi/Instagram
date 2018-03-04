@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container mt-5">
+    <div class="row">
+      {% for pic in all_pics %}
+      <div class="col-4 m-2">
+        <img src="{{pic.image.url}}" alt="" class="img-fluid">
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
