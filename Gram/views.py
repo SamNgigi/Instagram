@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from .models import Image, Profile, Comment
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Image, Profile
 from .forms import ProfileForm, PostForm, CommentForm
 # Create your views here.
 
@@ -48,16 +48,18 @@ def post(request):
 
 
 @login_required(login_url='/accounts/login/')
-def comment(request):
+def comment(request, pk):
     test = 'Working'
+    post = get_object_or_404(Image, pk=pk)
     current_user = request.user
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user = current_user
-            post.comment = comment
-            post.comment.save()
+            comment.post = post
+            comment.author = current_user
+            comment.save()
+            return redirect('home')
     else:
         form = CommentForm()
 
