@@ -9,11 +9,13 @@ from .forms import ProfileForm, PostForm, CommentForm
 @login_required(login_url='/accounts/login/')
 def home(request):
     test = 'Working'
+    profiles = Profile.objects.filter(user=request.user)
     image_test = Image.objects.all()
 
     content = {
         "test": test,
         "image_test": image_test,
+        "profiles": profiles
     }
     return render(request, 'index.html', content)
 
@@ -76,7 +78,8 @@ def comment(request, pk):
 def profile(request):
     test = 'Profile route Working'
     # profiles = Profile.objects.all()
-    images = Image.objects.filter(creator=request.user)
+    current_user = request.user
+    images = Image.objects.filter(creator=current_user.id)
     profiles = Profile.objects.filter(user=request.user)
     content = {
         "test": test,
