@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Lobster|Sacramento|Open+Sans|Quicksand|Raleway');
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Lobster|Sacramento|Open+Sans|Quicksand|Raleway|Lobster+Two');
+
+body{
+  background-color: #fafafa;
+}
 
 h1 {
   /*font-family: 'Julius Sans One', sans-serif;*/
@@ -10,7 +14,18 @@ h2 {
   font-family: 'Quicksand', sans-serif;
 }
 
+a.navbar-brand{
+  font-family: 'Lobster Two', cursive;
+}
+.form-inline:focus{
+  outline: none;
+}
+.form-control {
+  font-family: "FontAwesome"
+}
+
 * {
+
   /*font-family: 'Lobster', cursive;*/
   /*font-family: 'Julius Sans One', sans-serif;*/
   /*font-family: 'Sacramento', cursive;*/

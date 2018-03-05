@@ -1,42 +1,106 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.db import transaction
 from .models import Image, Profile
-from .forms import ProfileForm  # , PostForm
+from .forms import ProfileForm, PostForm, CommentForm
 # Create your views here.
 
 
 @login_required(login_url='/accounts/login/')
 def home(request):
     test = 'Working'
+    profiles = Profile.objects.filter(user=request.user)
     image_test = Image.objects.all()
+
     content = {
         "test": test,
-        "image_test": image_test
+        "image_test": image_test,
+        "profiles": profiles
     }
     return render(request, 'index.html', content)
 
 
 @login_required(login_url='/accounts/login/')
-def profile(request):
-    test = 'Profile route Working'
-    profiles = Profile.objects.all()
+def all(request):
+    test = 'Working'
+    all_pics = Image.objects.all()
+    content = {
+        'test': test,
+        'all_pics': all_pics,
+    }
+    return render(request, 'all.html', content)
+
+
+@login_required(login_url='/accounts/login/')
+def post(request):
+    test = 'Working'
+    current_user = request.user
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.creator = current_user
+            post.save()
+            return redirect('home')
+    else:
+        form = PostForm()
     content = {
         "test": test,
+        "post_form": form,
+    }
+    return render(request, 'post.html', content)
+
+
+@login_required(login_url='/accounts/login/')
+def comment(request, pk):
+    test = 'Working'
+    post = get_object_or_404(Image, pk=pk)
+    current_user = request.user
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = current_user
+            comment.save()
+            return redirect('home')
+    else:
+        form = CommentForm()
+
+    content = {
+        "test": test,
+        "comment_form": form,
+    }
+    return render(request, 'comment.html', content)
+
+
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    test = 'Profile route Working'
+    # profiles = Profile.objects.all()
+    current_user = request.user
+    images = Image.objects.filter(creator=current_user.id)
+    profiles = Profile.objects.filter(user=request.user)
+    content = {
+        "test": test,
+        "images": images,
         "profiles": profiles
     }
     return render(request, 'profiles/profile.html', content)
 
 
 @login_required(login_url='/accounts/login/')
-def profile_edit(request):
+@transaction.atomic
+def update_profile(request):
     test = 'Edit profile route working'
-    current_user = request.user
+    # current_user = request.user
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES)
+        form = ProfileForm(request.POST, request.FILES,
+                           instance=request.user.profile)
         if form.is_valid():
             profile = form.save(commit=False)
-            profile.user = current_user
             profile.save()
+            return redirect('profile')
     else:
         form = ProfileForm(instance=request.user)
 
