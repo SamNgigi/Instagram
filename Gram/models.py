@@ -52,7 +52,7 @@ class Image(models.Model):
 
 
 class Comment(models.Model):
-    comment = models.CharField(max_length=200, blank=True)
+    text = models.CharField(max_length=200, blank=True)
     author = models.ForeignKey(User,  on_delete=models.CASCADE, blank=True)
     post = models.ForeignKey(
         Image, on_delete=models.CASCADE, related_name='comments')
@@ -66,4 +66,4 @@ class Comment(models.Model):
         self.save()
 
     def __str__(self):
-        return self.comment
+        return self.text

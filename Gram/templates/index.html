@@ -21,8 +21,9 @@
         </div>
         <div class="comments ml-4">
           {% for comment in photo.comments.all %}
-          <p><strong>{{comment.author}}</strong> {{comment.comment}}</p>
+          <p><strong>{{comment.author}}</strong> {{comment.text}}</p>
           {% endfor %}
+          <p>{{photo.time|timesince}}</p>
         </div>
         <hr>
         <div class="make-comment mb-3">
