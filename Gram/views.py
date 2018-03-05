@@ -9,22 +9,10 @@ from .forms import ProfileForm, PostForm, CommentForm
 def home(request):
     test = 'Working'
     image_test = Image.objects.all()
-    comment_test = Comment.objects.all()
-    current_user = request.user
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = current_user
-            comment.save()
-    else:
-        form = CommentForm()
 
     content = {
         "test": test,
         "image_test": image_test,
-        "comment_test": comment_test,
-        "comment_form": form
     }
     return render(request, 'index.html', content)
 
@@ -64,13 +52,15 @@ def comment(request):
     test = 'Working'
     current_user = request.user
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+        form = CommentForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.creator = current_user
-            post.save()
+            comment = form.save(commit=False)
+            comment.user = current_user
+            post.comment = comment
+            post.comment.save()
     else:
         form = CommentForm()
+
     content = {
         "test": test,
         "comment_form": form,
