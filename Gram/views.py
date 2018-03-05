@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db import transaction
 from .models import Image, Profile
 from .forms import ProfileForm, PostForm, CommentForm
 # Create your views here.
@@ -38,6 +39,7 @@ def post(request):
             post = form.save(commit=False)
             post.creator = current_user
             post.save()
+            return redirect('home')
     else:
         form = PostForm()
     content = {
@@ -73,24 +75,29 @@ def comment(request, pk):
 @login_required(login_url='/accounts/login/')
 def profile(request):
     test = 'Profile route Working'
-    profiles = Profile.objects.all()
+    # profiles = Profile.objects.all()
+    images = Image.objects.filter(creator=request.user)
+    profiles = Profile.objects.filter(user=request.user)
     content = {
         "test": test,
+        "images": images,
         "profiles": profiles
     }
     return render(request, 'profiles/profile.html', content)
 
 
 @login_required(login_url='/accounts/login/')
-def profile_edit(request):
+@transaction.atomic
+def update_profile(request):
     test = 'Edit profile route working'
-    current_user = request.user
+    # current_user = request.user
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=request.user)
+        form = ProfileForm(request.POST, request.FILES,
+                           instance=request.user.profile)
         if form.is_valid():
             profile = form.save(commit=False)
-            profile.user = current_user
             profile.save()
+            return redirect('profile')
     else:
         form = ProfileForm(instance=request.user)
 
