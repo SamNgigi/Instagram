@@ -36,22 +36,25 @@ def all(request):
 def post(request):
     test = 'Working'
     current_user = request.user
-    profiles = Profile.get_profiles()
+    profiles = Profile.objects.all()
     for profile in profiles:
         if profile.user.id == current_user.id:
             if request.method == 'POST':
                 form = PostForm(request.POST, request.FILES)
                 if form.is_valid():
-                    upload = form.save(commit=False)
-                    upload.creator = current_user
-                    upload.profile = profile
-                    upload.save()
+                    post = form.save(commit=False)
+                    post.creator = current_user
+                    post.profile = profile
+                    post.save()
                     return redirect('home')
             else:
                 form = PostForm()
-            return render(request, 'upload/new.html', {"test": test,
-                                                       "user": current_user,
-                                                       "form": form})
+                content = {
+                    "test": test,
+                    "post_form": form,
+                    "user": current_user
+                }
+    return render(request, 'post.html', content)
 
 
 @login_required(login_url='/accounts/login/')
@@ -95,12 +98,12 @@ def profile(request):
 @transaction.atomic
 def update_profile(request):
     test = 'Edit profile route working'
-    # current_user = request.user
+    current_user = request.user
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES,
-                           instance=request.user.profile)
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             profile = form.save(commit=False)
+            profile.user = current_user
             profile.save()
             return redirect('profile')
     else:
