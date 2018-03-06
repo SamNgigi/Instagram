@@ -10,10 +10,12 @@ from .forms import ProfileForm, PostForm, CommentForm
 def home(request):
     test = 'Working'
     image_test = Image.objects.all()
+    profiles = Profile.objects.all()
 
     content = {
         "test": test,
         "image_test": image_test,
+        "profiles": profiles
     }
     return render(request, 'index.html', content)
 

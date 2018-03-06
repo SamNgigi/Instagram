@@ -5,6 +5,7 @@ from django.db import models
 # import datetime as dt
 # from tinymce.models import HTMLField
 # Create your models here.
+DEFAULT = 'profile/user.ico'
 
 
 class Tag(models.Model):
@@ -17,31 +18,32 @@ class Tag(models.Model):
         self.save()
 
 
-class Image(models.Model):
-    image = models.ImageField(upload_to='images/', blank=True, null=True)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
-    caption = models.TextField(blank=True)
-    likes = models.PositiveIntegerField(blank=True, default=0)
-    time = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag, blank=True)
-
-    class Meta:
-        ordering = ['-time']
-
-    def save_images(self):
-        self.save()
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    bio = models.CharField(max_length=200, blank=True)
+    bio = models.CharField(max_length=200)
     profile_pic = models.ImageField(
-        upload_to='profile/', blank=True, null=True)
-    post = models.ForeignKey(
-        Image, on_delete=models.CASCADE,
-        related_name='profile', blank=True, null=True)
+        upload_to='profile/', blank=True, default=DEFAULT)
+
+    def __str__(self):
+        return self.first_name
+
+    def save_profile(self):
+        self.save()
+
+    def delete_profile(self):
+        self.delete()
+
+    @classmethod
+    def get_profiles(cls):
+        profiles = cls.objects.all()
+        return profiles
+
+    @classmethod
+    def search_profiles(cls, query):
+        profile = cls.objects.filter(user_username__icontains=query)
+        return profile
 
 
 @receiver(post_save, sender=User)
@@ -55,13 +57,32 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
+class Image(models.Model):
+    image = models.ImageField(upload_to='images/')
+    caption = models.TextField(blank=True)
+    likes = models.PositiveIntegerField(default=0)
+    time = models.DateTimeField(auto_now_add=True)
+    tags = models.ManyToManyField(Tag, blank=True)
+    creator = models.ForeignKey(
+        Profile, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-time']
+
+    def save_images(self):
+        self.save()
+
+    def total_likes(self):
+        return self.likes.count()
+
+
 class Comment(models.Model):
     text = models.CharField(max_length=200, blank=True)
-    author = models.ForeignKey(User,  on_delete=models.CASCADE, blank=True)
+    author = models.ForeignKey(Profile,  on_delete=models.CASCADE)
     post = models.ForeignKey(
         Image, on_delete=models.CASCADE, related_name='comments')
     # profile_pic = models.ForeignKey(Profile, blank=True)
-    time_posted = models.DateTimeField(auto_now_add=True, blank=True)
+    time_posted = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-time_posted']

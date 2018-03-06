@@ -5,15 +5,29 @@
       {% for photo in image_test %}
       <div class="ml-3 mt-3 mb-3 display" style="background-color:#ffffff; border: 1px solid #e6e6e6; border-radius: 5px;">
         <div class="display p-4" style="white-space:nowrap">
-          <img src="{{photo.image.url}}" alt="" style="height:40px;width:40px; border-radius:50%; display:inline;">
-          <p class="ml-2" style="display:inline; white-space:nowrap;"><strong>{{photo.creator}}</strong></p>
+          {% if photo.profile.profile_pic %}
+          <img src="{{photo.profile.profile_pic.url}}" alt="" style="height:40px;width:40px; border-radius:50%; display:inline;">
+          {% else %}
+          <img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="" style="height:40px;width:40px; border-radius:50%; display:inline;">
+          {% endif %}
+          <p class="ml-2" style="display:inline; white-space:nowrap;"><strong>{{photo.creator.user}}</strong></p>
         </div>
         <img src="{{photo.image.url}}" alt="" class="img-fluid">
         <div class="icons mt-3">
-          <a href="#" style="color:inherit;"><i class="far fa-heart fa-2x ml-4"></i></a>
-          <a href="#" style="color:inherit;"><i class="far fa-comment fa-2x ml-4"></i></a>
+          <a id="heart" class="post-likes"  data-post-id="{{photo.id}}" style="color:inherit;">
+            {% if liked %}
 
-          <a href="#" style="color:inherit;"><i class="far fa-bookmark fa-2x float-right mr-4"></i></a>
+            <i class="fa fa-heart-o fa-2x ml-3" aria-hidden="true" style="display: inline-block;"></i>
+            <i class="fa fa-heart fa-2x ml-3" aria-hidden="true" style="color:red; display:none"></i>
+            {% else %}
+            <i class="fa fa-heart-o fa-2x ml-3" aria-hidden="true" style="display: inline-block;"></i>
+            <i class="fa fa-heart fa-2x ml-3" aria-hidden="true" style="color:red; display:none"></i>
+            {% endif %}
+          </a>
+
+          <a href="#" style="color:inherit;"><i class="fa fa-comment-o fa-2x ml-4"></i></a>
+
+          <a href="#" style="color:inherit;"><i class="fa fa-bookmark-o fa-2x float-right mr-4"></i></a>
         </div>
         <div class="likes">
           <p class="ml-4 mt-3"><strong>{{photo.likes}} likes</strong></p>
