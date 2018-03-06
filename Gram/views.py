@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import transaction
-from django.http import HttpResponse, Http404
+# from django.http import Http404
 from .models import Image, Profile
 from .forms import ProfileForm, PostForm, CommentForm
 # Create your views here.
@@ -15,6 +15,7 @@ def home(request):
 
     content = {
         "test": test,
+        "current_user": request.user,
         "image_test": image_test,
         "profiles": profiles
     }
