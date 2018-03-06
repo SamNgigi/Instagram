@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import transaction
+from django.http import HttpResponse, Http404
 from .models import Image, Profile
 from .forms import ProfileForm, PostForm, CommentForm
 # Create your views here.
@@ -35,20 +36,22 @@ def all(request):
 def post(request):
     test = 'Working'
     current_user = request.user
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.creator = current_user
-            post.save()
-            return redirect('home')
-    else:
-        form = PostForm()
-    content = {
-        "test": test,
-        "post_form": form,
-    }
-    return render(request, 'post.html', content)
+    profiles = Profile.get_profiles()
+    for profile in profiles:
+        if profile.user.id == current_user.id:
+            if request.method == 'POST':
+                form = PostForm(request.POST, request.FILES)
+                if form.is_valid():
+                    upload = form.save(commit=False)
+                    upload.creator = current_user
+                    upload.profile = profile
+                    upload.save()
+                    return redirect('home')
+            else:
+                form = PostForm()
+            return render(request, 'upload/new.html', {"test": test,
+                                                       "user": current_user,
+                                                       "form": form})
 
 
 @login_required(login_url='/accounts/login/')

@@ -1,5 +1,3 @@
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db import models
 # import datetime as dt
@@ -19,7 +17,8 @@ class Tag(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='profiles')
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     bio = models.CharField(max_length=200)
@@ -46,24 +45,14 @@ class Profile(models.Model):
         return profile
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
-
-
 class Image(models.Model):
     image = models.ImageField(upload_to='images/')
     caption = models.TextField(blank=True)
     likes = models.PositiveIntegerField(default=0)
     time = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, blank=True)
-    creator = models.ForeignKey(
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE)
 
     class Meta:

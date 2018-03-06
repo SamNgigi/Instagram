@@ -10,13 +10,12 @@
           {% else %}
           <img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="" style="height:40px;width:40px; border-radius:50%; display:inline;">
           {% endif %}
-          <p class="ml-2" style="display:inline; white-space:nowrap;"><strong>{{photo.creator.user}}</strong></p>
+          <p class="ml-2" style="display:inline; white-space:nowrap;"><strong>{{photo.creator}}</strong></p>
         </div>
         <img src="{{photo.image.url}}" alt="" class="img-fluid">
         <div class="icons mt-3">
           <a id="heart" class="post-likes"  data-post-id="{{photo.id}}" style="color:inherit;">
             {% if liked %}
-
             <i class="fa fa-heart-o fa-2x ml-3" aria-hidden="true" style="display: inline-block;"></i>
             <i class="fa fa-heart fa-2x ml-3" aria-hidden="true" style="color:red; display:none"></i>
             {% else %}
