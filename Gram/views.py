@@ -84,11 +84,12 @@ def comment(request, pk):
 @login_required(login_url='/accounts/login/')
 def profile(request):
     test = 'Profile route Working'
-    # profiles = Profile.objects.all()
+    current_user = request.user
     images = Image.objects.filter(creator=request.user)
     profiles = Profile.objects.filter(user=request.user)
     content = {
         "test": test,
+        "current_user": current_user,
         "images": images,
         "profiles": profiles
     }
@@ -100,12 +101,13 @@ def profile(request):
 def update_profile(request):
     test = 'Edit profile route working'
     current_user = request.user
+    user_profile = Profile.objects.filter(user_id=current_user)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = current_user
-            profile.save()
+            user_profile = form.save(commit=False)
+            user_profile.user = current_user
+            user_profile.save()
             return redirect('profile')
     else:
         form = ProfileForm(instance=request.user)

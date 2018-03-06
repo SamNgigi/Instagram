@@ -3,11 +3,13 @@
   <div class="row">
     <div class="col-12 text-center">
       {% for profile in profiles %}
+      {% if current_user.id == profile.user.id %}
       <div class="profile p-4" style="white-space:nowrap">
         <img src="{{profile.profile_pic.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;">
         <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong>{{profile.first_name}} {{profile.last_name}}</strong></p>
         <a href="/edit" style="display:inline; white-space:nowrap; color:#a6a6a6;"><i class="fa fa-pencil-square-o fa-lg ml-4"></i></a>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>

@@ -1,11 +1,8 @@
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db import models
 # import datetime as dt
 # from tinymce.models import HTMLField
 # Create your models here.
-DEFAULT = 'profile/user.ico'
 
 
 class Tag(models.Model):
@@ -24,7 +21,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=30)
     bio = models.CharField(max_length=200)
     profile_pic = models.ImageField(
-        upload_to='profile/', default=DEFAULT)
+        upload_to='profile/')
 
     def __str__(self):
         return self.first_name
@@ -68,7 +65,7 @@ class Image(models.Model):
 
 class Comment(models.Model):
     text = models.CharField(max_length=200, blank=True)
-    author = models.ForeignKey(Profile,  on_delete=models.CASCADE)
+    author = models.ForeignKey(User,  on_delete=models.CASCADE)
     post = models.ForeignKey(
         Image, on_delete=models.CASCADE, related_name='comments')
     # profile_pic = models.ForeignKey(Profile, blank=True)
