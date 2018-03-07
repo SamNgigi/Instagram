@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^post/', views.post, name='post'),
     url(r'^comment/(?P<pk>\d+)', views.comment, name='comment'),
     url(r'^all/', views.all, name='all'),
+    url(r'^ajax/likes/(?P<pk>\d+)', views.likes, name='likes'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

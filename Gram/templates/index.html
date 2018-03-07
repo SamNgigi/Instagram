@@ -27,15 +27,15 @@
         <img src="{{photo.image.url}}" alt="" class="img-fluid">
         <div class="icons mt-3">
           <a id="heart" class="post-likes" data-post-id="{{photo.id}}" style="color:inherit;">
-            <i id='like-{{photo.id}}' data-post-id='like-{{photo.id}}'   class="fa fa-heart fa-2x ml-3" aria-hidden="true" style="display: inline-block;"></i>
+            <i id='like-{{photo.id}}' data-post-id='like-{{photo.id}}'   class="fa fa-heart fa-2x ml-3" aria-hidden="true" style="display: inline-block; font-size:23px"></i>
           </a>
 
-          <a href="{% url 'comment' pk=photo.pk %}" style="color:inherit;"><i class="fa fa-comment-o fa-2x ml-4"></i></a>
+          <a href="{% url 'comment' pk=photo.pk %}" style="color:inherit;"><i class="fa fa-comment-o fa-2x ml-4" style="font-size:23px"></i></a>
 
           <a href="#" style="color:inherit;"><i class="fa fa-bookmark-o fa-2x float-right mr-4"></i></a>
         </div>
         <div class="likes">
-          <p class="ml-4 mt-3"><strong>{{photo.likes}} likes</strong></p>
+          <p class="ml-4 mt-3"><strong class="like-count" data-likeId="{{photo.id}}" >{{photo.likes}}</strong><strong> likes</strong></p>
           <p class="p-3 ml-2">{{photo.caption}}</p>
         </div>
         <div class="comments ml-4">

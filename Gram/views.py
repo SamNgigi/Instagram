@@ -82,6 +82,13 @@ def comment(request, pk):
 
 
 @login_required(login_url='/accounts/login/')
+def likes(request, id):
+    # likes = request.POST.get()
+    # print(likes)
+    pass
+
+
+@login_required(login_url='/accounts/login/')
 def profile(request):
     test = 'Profile route Working'
     current_user = request.user
