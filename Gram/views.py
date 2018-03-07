@@ -8,6 +8,24 @@ from .forms import ProfileForm, PostForm, CommentForm
 
 
 @login_required(login_url='/accounts/login/')
+def search_result(request, query):
+    if 'query' in request.GET and request.GET['query']:
+        query = request.GET.get("query")
+        user = Profile.search_profiles(query)
+        message = f"query"
+
+        content = {
+            "message": message,
+            "user": user,
+        }
+
+        return render(request, 'search.html', content)
+    else:
+        message = "You haven't searched for anyone"
+        return render(request, 'search.html', {"message": message})
+
+
+@login_required(login_url='/accounts/login/')
 def home(request):
     test = 'Working'
     image_test = Image.objects.all()
