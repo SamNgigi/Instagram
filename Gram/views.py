@@ -12,11 +12,13 @@ def search_result(request):
     if 'query' in request.GET and request.GET['query']:
         query = request.GET.get("query")
         user = Profile.search_profiles(query)
+        images = Image.objects.all()
         message = f"query"
 
         content = {
             "message": message,
             "found": user,
+            "images": images,
         }
 
         return render(request, 'search.html', content)
