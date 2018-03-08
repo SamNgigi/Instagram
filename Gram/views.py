@@ -2,8 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import transaction
 # from django.http import Http404
-from .models import Image, Profile
+from .models import Image, Profile, Follow
 from .forms import ProfileForm, PostForm, CommentForm
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -22,7 +23,12 @@ def follow(request, operation, pk):
 
 
     """
-
+    followed_user = User.objects.get(pk=pk)
+    current_user = request.user
+    if operation == 'add':
+        Follow.follow(current_user, followed_user)
+    elif operation == 'remove':
+        Follow.unfollow(current_user, followed_user)
     return redirect('home')
 
 
@@ -63,14 +69,19 @@ def home(request):
     current_user = request.user
     image_test = Image.objects.all()
     profiles = Profile.objects.all()
+    # users = User.objects.exclude(id=request.user.id) dope way to exclude current user
     user = Profile.objects.get(user=current_user)
     print(user)
+    # Below code allows us to get the friend that the current user is following.
+    friend = Follow.objects.get(current_user=request.user)
+    friends = friend.users.all()
     content = {
         "test": test,
         "current_user": current_user,
         "user": user,
         "image_test": image_test,
-        "profiles": profiles
+        "profiles": profiles,
+        "friends": friends
     }
     return render(request, 'index.html', content)
 
