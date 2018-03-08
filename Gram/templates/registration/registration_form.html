@@ -1,12 +1,13 @@
 {% extends "registration/base.html" %}
 {% load bootstrap4 %}
 {% block content %}
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 p-5">
   <div class="row">
     <!-- Empty div -->
-    <div class="col-lg-3"></div>
-    <div class="col-lg-3"></div>
-    <div class="col-lg-3">
+    <div class="col-lg-6 p-5">
+      <img src="https://assets.wired.com/photos/w_1720/wp-content/uploads/2017/11/iphonex-TA.jpg" alt="" class="img-fluid">
+    </div>
+    <div class="col-lg-6 p-5">
       {% if form.errors %}
       <p>Some information might be incorrect</p>
       {% endif %}
@@ -26,8 +27,6 @@
         <p>Do you already have an account?<a class="btn btn-default" href="/accounts/login/">Sign In</a></p>
       </div>
     </div>
-    <!-- Empty div -->
-    <div class="col-lg-3"></div>
   </div>
 </div>
 {% endblock %}
