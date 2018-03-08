@@ -22,6 +22,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length=200)
     profile_pic = models.ImageField(
         upload_to='profile/')
+    time_stamp = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.first_name
@@ -82,12 +83,19 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
-    follower = models.ForeignKey(User, related_query_name='follower')
-    following = models.ForeignKey(User, related_query_name='following')
-    time_stamp = models.DateTimeField(auto_now_add=True)
+    follower = models.ManyToManyField(User)
+    current_user = models.ForeignKey(User, related_name='owner', null=True)
 
-    class Meta:
-        ordering = ('-time_stamp')
+    @classmethod
+    def follow(cls, current_user, new_follow):
+        friend, created = cls.objects.get_or_create(
+            current_user=current_user
+        )
+        friend.follower.add(new_follow)
 
-    def __str__(self):
-        return '{} follows {}'.format(self.follower, self.following)
+    @classmethod
+    def unfollow(cls, current_user, new_follow):
+        friend, created = cls.objects.get_or_create(
+            current_user=current_user
+        )
+        friend.follower.remove(new_follow)

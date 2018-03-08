@@ -8,6 +8,36 @@ from .forms import ProfileForm, PostForm, CommentForm
 
 
 @login_required(login_url='/accounts/login/')
+def follow(request, operation, pk):
+    """
+    To implement this adding friends using many to many relationship will try
+
+    friend = Friend.follow(operation, pk)
+
+    where operation maybe to add or remove a friend.
+
+    the follow() does the tie of current user to friend instance. From here it
+    it would mean displaying the Friend.objects.all() to the where would
+    display friends
+
+
+    """
+
+    return redirect('home')
+
+
+@login_required(login_url='/accounts/login/')
+def others(request, pk):
+    profile = Profile.objects.get(pk=pk)
+    images = Image.objects.all().filter(creator_id=pk)
+    content = {
+        "profile": profile,
+        'images': images,
+    }
+    return render(request, 'other.html', content)
+
+
+@login_required(login_url='/accounts/login/')
 def search_result(request):
     if 'query' in request.GET and request.GET['query']:
         query = request.GET.get("query")
@@ -30,12 +60,15 @@ def search_result(request):
 @login_required(login_url='/accounts/login/')
 def home(request):
     test = 'Working'
+    current_user = request.user
     image_test = Image.objects.all()
     profiles = Profile.objects.all()
-
+    user = Profile.objects.get(user=current_user)
+    print(user)
     content = {
         "test": test,
-        "current_user": request.user,
+        "current_user": current_user,
+        "user": user,
         "image_test": image_test,
         "profiles": profiles
     }
@@ -125,7 +158,7 @@ def profile(request):
 
 @login_required(login_url='/accounts/login/')
 @transaction.atomic
-def update_profile(request):
+def add_profile(request):
     test = 'Edit profile route working'
     current_user = request.user
     user_profile = Profile.objects.filter(user_id=current_user)
@@ -135,7 +168,7 @@ def update_profile(request):
             user_profile = form.save(commit=False)
             user_profile.user = current_user
             user_profile.save()
-            return redirect('profile')
+            return redirect('home')
     else:
         form = ProfileForm(instance=request.user)
 
