@@ -60,12 +60,15 @@ def search_result(request):
 @login_required(login_url='/accounts/login/')
 def home(request):
     test = 'Working'
+    current_user = request.user
     image_test = Image.objects.all()
     profiles = Profile.objects.all()
-
+    user = Profile.objects.get(user=current_user)
+    print(user)
     content = {
         "test": test,
-        "current_user": request.user,
+        "current_user": current_user,
+        "user": user,
         "image_test": image_test,
         "profiles": profiles
     }
