@@ -82,4 +82,4 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
-    follower = models.ForeignKey(User)
+    follower = models.ManyToManyField(User)

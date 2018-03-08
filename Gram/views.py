@@ -8,6 +8,11 @@ from .forms import ProfileForm, PostForm, CommentForm
 
 
 @login_required(login_url='/accounts/login/')
+def follow(request, operation, pk):
+    return redirect('home')
+
+
+@login_required(login_url='/accounts/login/')
 def search_result(request):
     if 'query' in request.GET and request.GET['query']:
         query = request.GET.get("query")
