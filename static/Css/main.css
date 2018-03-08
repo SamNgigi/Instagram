@@ -32,3 +32,7 @@ a.navbar-brand{
   font-family: 'Quicksand', sans-serif;
   /*font-family: 'Open Sans', sans-serif;*/
 }
+
+.red {
+  color: red;
+}
