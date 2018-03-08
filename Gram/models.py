@@ -36,14 +36,16 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=30)
     bio = models.CharField(max_length=200)
     profile_pic = models.ImageField(
-<<<<<<< HEAD
+<< << << < HEAD
         upload_to='profile/', blank=True, null=True)
     post = models.ForeignKey(
         Image, on_delete=models.CASCADE, related_name='profile', blank=True)
-=======
-        upload_to='profile/')
-    time_stamp = models.DateTimeField(auto_now_add=True, null=True)
->>>>>>> temp2
+
+
+== == == =
+        upload_to = 'profile/')
+    time_stamp=models.DateTimeField(auto_now_add = True, null = True)
+>> >>>> > temp2
 
     def __str__(self):
         return self.first_name
@@ -56,29 +58,29 @@ class Profile(models.Model):
 
     @classmethod
     def get_profiles(cls):
-        profiles = cls.objects.all()
+        profiles=cls.objects.all()
         return profiles
 
     @classmethod
     def search_profiles(cls, query):
-        profile = cls.objects.filter(user__username__icontains=query)
+        profile=cls.objects.filter(user__username__icontains = query)
         return profile
 
 
-<<<<<<< HEAD
-=======
+<< << << < HEAD
+== == ===
 class Image(models.Model):
-    image = models.ImageField(upload_to='images/')
-    caption = models.TextField(blank=True)
-    likes = models.PositiveIntegerField(default=0)
-    time = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag, blank=True)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    profile = models.ForeignKey(
-        Profile, on_delete=models.CASCADE)
+    image=models.ImageField(upload_to = 'images/')
+    caption=models.TextField(blank = True)
+    likes=models.PositiveIntegerField(default = 0)
+    time=models.DateTimeField(auto_now_add = True)
+    tags=models.ManyToManyField(Tag, blank = True)
+    creator=models.ForeignKey(User, on_delete = models.CASCADE)
+    profile=models.ForeignKey(
+        Profile, on_delete = models.CASCADE)
 
     class Meta:
-        ordering = ['-time']
+        ordering=['-time']
 
     def save_images(self):
         self.save()
@@ -87,17 +89,17 @@ class Image(models.Model):
         return self.likes.count()
 
 
->>>>>>> temp2
+>> >>>> > temp2
 class Comment(models.Model):
-    text = models.CharField(max_length=200, blank=True)
-    author = models.ForeignKey(User,  on_delete=models.CASCADE)
-    post = models.ForeignKey(
-        Image, on_delete=models.CASCADE, related_name='comments')
+    text=models.CharField(max_length = 200, blank = True)
+    author=models.ForeignKey(User,  on_delete = models.CASCADE)
+    post=models.ForeignKey(
+        Image, on_delete = models.CASCADE, related_name = 'comments')
     # profile_pic = models.ForeignKey(Profile, blank=True)
-    time_posted = models.DateTimeField(auto_now_add=True)
+    time_posted=models.DateTimeField(auto_now_add = True)
 
     class Meta:
-        ordering = ['-time_posted']
+        ordering=['-time_posted']
 
     def save_comment(self):
         self.save()
@@ -107,19 +109,19 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
-    follower = models.ManyToManyField(User)
-    current_user = models.ForeignKey(User, related_name='owner', null=True)
+    follower=models.ManyToManyField(User)
+    current_user=models.ForeignKey(User, related_name = 'owner', null = True)
 
     @classmethod
     def follow(cls, current_user, new_follow):
-        friend, created = cls.objects.get_or_create(
-            current_user=current_user
+        friend, created=cls.objects.get_or_create(
+            current_user = current_user
         )
         friend.follower.add(new_follow)
 
     @classmethod
     def unfollow(cls, current_user, new_follow):
-        friend, created = cls.objects.get_or_create(
-            current_user=current_user
+        friend, created=cls.objects.get_or_create(
+            current_user = current_user
         )
         friend.follower.remove(new_follow)
