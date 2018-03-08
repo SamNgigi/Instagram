@@ -15,17 +15,17 @@
 
   <div class="row mt-3">
     <div class="col-1"></div>
-    <div class="col-10">
+    <div class="col-9 ml-md-auto">
       {% for photo in image_test %}
       <div class="container ml-3 mt-3 mb-3 display" style="background-color:#ffffff; border: 1px solid #e6e6e6; border-radius: 5px;">
-      <div class="row">
-        <div class="col- display p-4" style="white-space:nowrap">
-          {% if photo.profile.profile_pic %}
-          <img src="{{photo.profile.profile_pic.url}}" alt="" style="height:40px;width:40px; border-radius:50%; display:inline;"> {% else %}
-          <img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="" style="height:40px;width:40px; border-radius:50%; display:inline;"> {% endif %}
-          <p class="ml-2" style="display:inline; white-space:nowrap;"><strong>{{photo.creator}}</strong></p>
+        <div class="row">
+          <div class="col- display p-4" style="white-space:nowrap">
+            {% if photo.profile.profile_pic %}
+            <img src="{{photo.profile.profile_pic.url}}" alt="" style="height:40px;width:40px; border-radius:50%; display:inline;"> {% else %}
+            <img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="" style="height:40px;width:40px; border-radius:50%; display:inline;"> {% endif %}
+            <p class="ml-2" style="display:inline; white-space:nowrap;"><strong>{{photo.creator}}</strong></p>
+          </div>
         </div>
-      </div>
         <div class="row">
           <div class="col- mx-auto">
             <img src="{{photo.image.url}}" alt="" class="img-fluid">
@@ -41,7 +41,7 @@
           <a href="#" style="color:inherit;"><i class="fa fa-bookmark-o fa-2x float-right mr-4"></i></a>
         </div>
         <div class="likes">
-          <p class="ml-4 mt-3"><strong class="like-count" data-likeId="{{photo.id}}" >{{photo.likes}}</strong><strong> likes</strong></p>
+          <p class="ml-4 mt-3"><strong class="like-count" data-likeId="{{photo.id}}">{{photo.likes}}</strong><strong> likes</strong></p>
           <p class="p-3 ml-2">{{photo.caption}}</p>
         </div>
         <div class="comments ml-4">
@@ -75,7 +75,26 @@
       </div>
       {% endfor %}
     </div>
-    <div class="col-1">
+    <div class="col-2">
+      <div class="container-fluid ml-5" style="position:fixed; width:320px">
+        <header style="margin-bottom:30px">
+          <img src="{{user_profile.profile_pic.url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+          <p style="font-weight:bold;font-size:16px">{{user_profile.user}}</p>
+        </header>
+        <hr>
+        <p style="float:left; font-size:15px; font-weight:bolder; color:grey">Stories</p>
+        <p style="float:right; font-weight:bolder; font-size:15px"><a style="color:inherit" href="{% url 'all' %}">View All</a></p>
+        <div class="stories" style="overflow-y:auto; height:300px;margin-top:50px;padding:10px; border-bottom: 1px solid #ddd; width:100%">
+          <hr> {% for profile in profiles %}
+          <div class="user_stories" style="margin-bottom:20px">
+            <img src="{{profile.profile_pic.url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+            <a href="{% url 'others' pk=profile.pk %}">
+              <p style="font-weight:bold;font-size:16px">{{profile.user}}<br></a>
+            <span style="font-size:12px;font-weight:normal; color:grey">{{profile.time_stamp|timesince|upper}} AGO</span></p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-8">
+      <div class="profile">
+        <img src="{{profile.profile_pic.url}}" alt="" style="height:150px;width:150px; border-radius:50%; float:left; margin-right:50px">
+        <p style="font-weight:bold; font-size:35px">{{profile.user}}</p>
+        <br>
+        <p style="font-size:20px"><span style="font-weight:bolder">0</span> Followers</span> <span style="margin-left:20px"> <span style="font-weight:bolder">0</span> Following</span>
+        </p>
+      </div>
+    </div>
+    <div class="col-sm-2">
+    </div>
+  </div>
+
+
+</div>
+
+
+<div class="container mt-5">
+  <div class="row">
+    <p>Posts by <strong><em style="color:#000">{{profile.user}}</em></strong></p>
+  </div>
+  <div class="row">
+    {% for pic in images %}
+    <div class="col-4 m-2">
+      <img src="{{pic.image.url}}" alt="" class="img-fluid">
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
