@@ -91,7 +91,7 @@
           <div class="user_stories" style="margin-bottom:20px">
             <img src="{{profile.profile_pic.url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
             <a href="{% url 'others' pk=profile.pk %}"><p style="font-weight:bold;font-size:16px">{{profile.user}}<br></a><span style="font-size:12px;font-weight:normal; color:grey">{{profile.time_stamp|timesince|upper}} AGO</span></p>
-            <a href="" class="btn btn-primary btn-sm">follow</a>
+            <a href="#" class="btn btn-primary btn-sm">follow</a>
           </div>
           {% endif %}
           {% endfor %}
