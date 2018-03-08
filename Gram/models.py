@@ -82,12 +82,4 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
-    follower = models.ForeignKey(User, related_query_name='follower')
-    following = models.ForeignKey(User, related_query_name='following')
-    time_stamp = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ('-time_stamp')
-
-    def __str__(self):
-        return '{} follows {}'.format(self.follower, self.following)
+    follower = models.ForeignKey(User)

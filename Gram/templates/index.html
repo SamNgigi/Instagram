@@ -6,7 +6,7 @@
       <div class="profile p-4" style="white-space:nowrap">
         <img src="{{profile.profile_pic.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;">
         <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;">Hi<strong> {{current_user}}</strong>. Welcome to Instagram</p>
-        <button class="btn btn-primary ml-2"><a href="/edit" style="display:inline; white-space:nowrap; color:#ffffff;">Edit profile<i class="fa fa-pencil-square-o fa-lg ml-4"></i></a></button>
+        <button class="btn btn-primary ml-2"><a href="{% url 'post' %}" style="display:inline; white-space:nowrap; color:#ffffff;">Post Image<i class="fa fa-plus-square-o fa-lg ml-4"></i></a></button>
         <hr>
       </div>
     </div>

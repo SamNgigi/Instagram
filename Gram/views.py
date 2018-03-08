@@ -135,7 +135,7 @@ def update_profile(request):
             user_profile = form.save(commit=False)
             user_profile.user = current_user
             user_profile.save()
-            return redirect('profile')
+            return redirect('home')
     else:
         form = ProfileForm(instance=request.user)
 
