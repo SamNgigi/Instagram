@@ -39,7 +39,7 @@ class Profile(models.Model):
 
     @classmethod
     def search_profiles(cls, query):
-        profile = cls.objects.filter(user_username__icontains=query)
+        profile = cls.objects.filter(user__username__icontains=query)
         return profile
 
 

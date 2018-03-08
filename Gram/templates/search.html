@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-2">
+  <div class="row">
+    {% if found %}
+
+    <div class="col- mx-auto p-5" style="background-color:#ffffff; border: 1px solid #e6e6e6;">
+      {% for user in found %}
+      <div class="profile p-4" style="white-space:nowrap">
+        <img src="{{found.profile_pic.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;">
+        <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong> {{user.user.username}}</strong> found</p>
+        {% endfor %}
+        <hr>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

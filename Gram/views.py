@@ -8,7 +8,7 @@ from .forms import ProfileForm, PostForm, CommentForm
 
 
 @login_required(login_url='/accounts/login/')
-def search_result(request, query):
+def search_result(request):
     if 'query' in request.GET and request.GET['query']:
         query = request.GET.get("query")
         user = Profile.search_profiles(query)
@@ -16,7 +16,7 @@ def search_result(request, query):
 
         content = {
             "message": message,
-            "user": user,
+            "found": user,
         }
 
         return render(request, 'search.html', content)
