@@ -8,6 +8,9 @@
         <img src="{{profile.profile_pic.url}}" alt="" style="height:70px;width:70px; border-radius:50%; display:inline;">
         <p class="ml-2" style="display:inline; white-space:nowrap; font-size:25px;"><strong>{{profile.first_name}} {{profile.last_name}}</strong></p>
         <button class="btn btn-primary ml-3" ><a href="{% url 'post' %}" style="display:inline; white-space:nowrap; color:#ffffff;">New Post<i class="fa fa-plus-square-o fa-2x ml-2 fa-lg ml-1 mt-1" aria-hidden="true"></i></a></button>
+
+        <p class="text-center" style="font-size:20px"><span style="font-weight:bolder">0</span> Followers</span> <span style="margin-left:20px"> <span style="font-weight:bolder">0</span> Following</span>
+        </p>
         <hr>
           {% endfor %}
       </div>
