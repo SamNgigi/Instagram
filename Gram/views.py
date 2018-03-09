@@ -74,10 +74,10 @@ def home(request):
     user = Profile.objects.get(user=current_user)
 
     # Below code allows us to get the friend that the current user is following.
-    friend, followed = Follow.objects.get_or_create(follower=request.user)
-    friends = friend.follower.all()
+    # friend, created = Follow.objects.get_or_create(follower=request.user)
+    # friends = friend.follower.all()
     # followed = Profile.objects.get(user_id=friends)
-    print(friends)
+    # print(friends)
 
     content = {
         "test": test,
@@ -85,7 +85,6 @@ def home(request):
         "user": user,
         "image_test": image_test,
         "profiles": profiles,
-        "friends": friends
     }
     return render(request, 'index.html', content)
 
