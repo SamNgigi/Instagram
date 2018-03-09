@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="icons mt-3">
-          <a id="heart" class="post-likes" data-post-id="{{photo.id}}" style="color:inherit;">
+          <a id="heart" class="post-likes" href="{% url 'like' operation='like' pk=photo.pk %}" data-post-id="{{photo.id}}" style="color:inherit;">
             <i id='like-{{photo.id}}' data-post-id='like-{{photo.id}}'   class="fa fa-heart fa-2x ml-3" aria-hidden="true" style="display: inline-block; font-size:23px"></i>
           </a>
 
@@ -53,7 +53,7 @@
         <hr>
         <div class="make-comment mb-3">
           <a class="p-3" href="{% url 'comment' pk=photo.pk %}" style="color:#a6a6a6;">Add Comment</a>
-          <a href="#" style="color:#a6a6a6;"><i class="fas fa-ellipsis-h fa-lg float-right mr-4"></i></a>
+          <a href="#" style="color:#a6a6a6;"><i class="fa fa-ellipsis-h fa-lg float-right mr-4"></i></a>
 
           <!-- Modal  that refused to work the way i want.-->
           <div class="modal fade" id="exampleModal{{photo.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
