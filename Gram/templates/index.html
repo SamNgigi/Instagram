@@ -79,7 +79,9 @@
       <div class="container-fluid ml-5" style="position:fixed; width:320px">
         <header style="margin-bottom:30px">
           <img class="mb-1" src="{{user.profile_pic.url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
-          <p style="font-weight:bold;font-size:25px">{{user.first_name}} {{user.last_name}} </p>
+          <a href="{% url 'profile' %}" style="color:#a6a6a6;">
+            <p style="font-weight:bold;font-size:25px">{{user.first_name}} {{user.last_name}} </p>
+          </a>
         </header>
         <hr>
         <p style="float:left; font-size:15px; font-weight:bolder; color:grey">Stories</p>
