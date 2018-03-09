@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="icons mt-3">
-          <a id="heart" class="post-likes" data-post-id="{{photo.id}}" style="color:inherit;">
+          <a id="heart" class="post-likes" href="{% url 'like' operation='like' pk=photo.pk %}" data-post-id="{{photo.id}}" style="color:inherit;">
             <i id='like-{{photo.id}}' data-post-id='like-{{photo.id}}'   class="fa fa-heart fa-2x ml-3" aria-hidden="true" style="display: inline-block; font-size:23px"></i>
           </a>
 

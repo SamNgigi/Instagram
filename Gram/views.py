@@ -135,10 +135,18 @@ def comment(request, pk):
 
 
 @login_required(login_url='/accounts/login/')
-def likes(request, id):
+def like(request, operation, pk):
     # likes = request.POST.get()
     # print(likes)
-    pass
+    # current_user = request.user
+    post = post = get_object_or_404(Image, pk=pk)
+    if operation == 'like':
+        post.likes = post.likes + 1
+        post.save()
+    elif operation == 'unlike':
+        post.likes = post.likes - 1
+        post.save()
+    return redirect('home')
 
 
 @login_required(login_url='/accounts/login/')
