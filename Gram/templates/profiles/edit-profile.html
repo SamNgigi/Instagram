@@ -2,7 +2,6 @@
 {% load bootstrap4 %}
 {% block content %}
 <div class="container">
-  <h1>{{test}}</h1>
   <form  action="{%url 'edit'%}" method="post" enctype="multipart/form-data">
      {%csrf_token%}
 

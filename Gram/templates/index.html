@@ -85,25 +85,19 @@
         <p style="float:left; font-size:15px; font-weight:bolder; color:grey">Stories</p>
         <p style="float:right; font-weight:bolder; font-size:15px"><a style="color:inherit" href="{% url 'all' %}">View All</a></p>
         <div class="stories" style="overflow-y:auto; height:300px;margin-top:50px;padding:10px; border-bottom: 1px solid #ddd; width:100%">
-          <hr>
-          {% for profile in profiles %}
-          {% if profile.user != user.user %}
+          <hr> {% for profile in profiles %} {% if profile.user != user.user %}
           <div class="user_stories" style="margin-bottom:20px">
             <img src="{{profile.profile_pic.url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
-            <a href="{% url 'others' pk=profile.pk %}"><p style="font-weight:bold;font-size:16px">{{profile.user}}<br></a><span style="font-size:12px;font-weight:normal; color:grey">{{profile.time_stamp|timesince|upper}} AGO</span></p>
+            <a href="{% url 'others' pk=profile.pk %}">
+              <p style="font-weight:bold;font-size:16px">{{profile.user}}<br></a><span style="font-size:12px;font-weight:normal; color:grey">{{profile.time_stamp|timesince|upper}} AGO</span></p>
             <a href="{% url 'follow' operation='add' pk=profile.pk %}" class="btn btn-primary btn-sm">follow</a>
           </div>
-          {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-      <div class="container-fluid ml-5 friends" style="position:fixed; width:320px">
-        <p style="float:left; font-size:15px; font-weight:bolder; color:grey">Friends</p>
-        <div class="stories" style="overflow-y:auto; height:300px;margin-top:50px;padding:10px; border-bottom: 1px solid #ddd; width:100%">
+          {% endif %} {% endfor %}
+          <hr>
+          <p style="float:left; font-size:15px; font-weight:bolder; color:grey">Friends</p>
           <hr>
           {% for friend in friends %}
           {% if friend %}
-
           <div class="user_stories" style="margin-bottom:20px">
             <img src="{{friend.profile_pic.url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
             <a href="#"><p style="font-weight:bold;font-size:16px">{{friend.user}}<br></a><span style="font-size:12px;font-weight:normal; color:grey">{{profile.time_stamp|timesince|upper}} AGO</span></p>
@@ -115,8 +109,8 @@
           {% endfor %}
         </div>
       </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
-{% endblock %}
+  {% endblock %}
