@@ -94,13 +94,14 @@
           </div>
           {% endif %} {% endfor %}
           <hr>
-          <p style="float:left; font-size:15px; font-weight:bolder; color:grey">Friends</p>
+          <div class="friend">
+
+          </div>
           <hr>
-          {% for friend in friends %}
-          {% if friend %}
           <div class="user_stories" style="margin-bottom:20px">
-            <img src="{{friend.profile_pic.url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
-            <a href="#"><p style="font-weight:bold;font-size:16px">{{friend.user}}<br></a><span style="font-size:12px;font-weight:normal; color:grey">{{profile.time_stamp|timesince|upper}} AGO</span></p>
+            {% for friend in friends %}
+            {% if friend %}
+            <a href="#"><p style="font-weight:bold;font-size:16px">{{friend.username}}<br></a><span style="font-size:12px;font-weight:normal; color:grey">{{profile.time_stamp|timesince|upper}} AGO</span></p>
             <a href="{% url 'follow' operation='remove' pk=friend.pk %}" class="btn btn-primary btn-sm">unfollow</a>
           </div>
           {% else %}

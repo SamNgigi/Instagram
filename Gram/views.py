@@ -25,6 +25,7 @@ def follow(request, operation, pk):
     """
     followed_user = User.objects.get(pk=pk)
     current_user = request.user
+    print(current_user)
     if operation == 'add':
         Follow.follow(current_user, followed_user)
     elif operation == 'remove':
@@ -71,17 +72,18 @@ def home(request):
     profiles = Profile.objects.all()
     # users = User.objects.exclude(id=request.user.id) dope way to exclude current user
     user = Profile.objects.get(user=current_user)
-    print(user)
+
     # Below code allows us to get the friend that the current user is following.
-    # friend = Follow.objects.get(current_user=request.user)
-    # friends = friend.users.all()
+    friend = Follow.objects.get(follower=request.user)
+    print(friend)
+    friends = friend.follower.all()
     content = {
         "test": test,
         "current_user": current_user,
         "user": user,
         "image_test": image_test,
         "profiles": profiles,
-        # "friends": friends
+        "friends": friends
     }
     return render(request, 'index.html', content)
 
