@@ -60,9 +60,6 @@ class Image(models.Model):
     def save_images(self):
         self.save()
 
-    def total_likes(self):
-        return self.likes.count()
-
 
 class Comment(models.Model):
     text = models.CharField(max_length=200, blank=True)
